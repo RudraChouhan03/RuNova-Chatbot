@@ -73,13 +73,20 @@ jobs:
       - name: Debug Docker configuration
         env:
             DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+            DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
             IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
         run: |
             echo "Username length: ${#DOCKER_USERNAME}"
+            echo "Password length: ${#DOCKER_PASSWORD}"
             echo "Image length: ${#IMAGE_NAME}"
 
             if [ -z "$DOCKER_USERNAME" ]; then
             echo "DOCKER_USERNAME is missing"
+            exit 1
+            fi
+
+            if [ -z "$DOCKER_PASSWORD" ]; then
+            echo "DOCKER_PASSWORD is missing"
             exit 1
             fi
 
