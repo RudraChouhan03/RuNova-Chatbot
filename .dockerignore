@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+.mypy_cache/
+
+# IDE
+.vscode/
+
+.gitignore
+.github
+favicon.png
+
+screenshots/
+
+__pycache__/
+
+chatbot/
+
+LICENSE
+
+.env
+
+chatbot.db
+chatbot.db-wal
+chatbot.db-shm
+
+faiss_db/
+
+# SQLite
+chatbot.db
+chatbot.db-wal
+chatbot.db-shm
+
+README.md

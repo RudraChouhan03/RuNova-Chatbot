@@ -16,9 +16,6 @@ chatbot.db-shm
 # FAISS Vector Database
 faiss_db/
 
-# Uploaded Files (if generated at runtime)
-uploads/
-
 # IDE
 .vscode/
 

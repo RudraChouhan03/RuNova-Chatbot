@@ -1,7 +1,3 @@
-<!-- ========================================================= -->
-<!--                       RuNova README                        -->
-<!-- ========================================================= -->
-
 <div align="center">
 
 <img src="favicon.png" width="160"/>
@@ -567,7 +563,47 @@ RuNova includes a modern responsive web interface featuring:
 - 📚 Chat history
 - 🌙 Modern responsive design
 
-> **Tip:** Add screenshots of the login page, main chat interface, and document upload flow here to make your repository more engaging.
+---
+
+# 📸 Screenshots
+
+## 🔐 Authentication
+
+<p align="center">
+  <img src="screenshots/login.png" width="900">
+</p>
+
+Secure Google OAuth authentication with JWT-based sessions.
+
+---
+
+## 🏠 Home Screen
+
+<p align="center">
+  <img src="screenshots/home.png" width="900">
+</p>
+
+Modern chat interface with multiple conversation modes, long-term memory, and intelligent tool selection.
+
+---
+
+## 📄 Document Intelligence (RAG)
+
+<p align="center">
+  <img src="screenshots/file_upload.png" width="900">
+</p>
+
+Upload PDFs, Word documents, PowerPoint presentations, Excel files, images, and more. RuNova indexes the content using FAISS and answers questions grounded in the uploaded documents.
+
+---
+
+## 🤝 Human-in-the-Loop Workflow
+
+<p align="center">
+  <img src="screenshots/hitl.png" width="900">
+</p>
+
+Sensitive actions require explicit user approval before execution, demonstrating a Human-in-the-Loop workflow.
 
 ---
 

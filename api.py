@@ -165,6 +165,9 @@ def auth_google(body: GoogleLogin) -> dict[str, Any]:
         },
     }
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 @app.post("/api/auth/dev")
 def auth_dev(body: DevLogin) -> dict[str, Any]:
