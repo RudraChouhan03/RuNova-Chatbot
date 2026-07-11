@@ -70,13 +70,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Validate Docker configuration
+      - name: Debug Docker configuration
         env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+            DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+            IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
         run: |
-          [ -z "$DOCKER_USERNAME" ] && echo "Missing DOCKER_USERNAME" && exit 1
-          [ -z "$IMAGE_NAME" ] && echo "Missing IMAGE_NAME" && exit 1
+            echo "Username length: ${#DOCKER_USERNAME}"
+            echo "Image length: ${#IMAGE_NAME}"
+
+            if [ -z "$DOCKER_USERNAME" ]; then
+            echo "DOCKER_USERNAME is missing"
+            exit 1
+            fi
+
+            if [ -z "$IMAGE_NAME" ]; then
+            echo "IMAGE_NAME is missing"
+            exit 1
+            fi
+
+            echo "Docker configuration is OK"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
