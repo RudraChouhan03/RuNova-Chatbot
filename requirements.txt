@@ -1,0 +1,49 @@
+# ---- Core orchestration ----
+langgraph==1.2.0
+langgraph-checkpoint-sqlite==3.1.0
+langchain-community==0.4.2
+langchain-text-splitters==1.1.2
+langchain-core>=1.4.0,<2.0.0
+
+# ---- LiteLLM Gateway ----
+litellm>=1.52.0
+langchain-litellm>=0.2.0
+
+# ---- Tools ----
+langchain-tavily==0.2.18
+tavily-python==0.7.26
+
+# ---- Embeddings / Vector Store ----
+langchain-huggingface
+sentence-transformers
+faiss-cpu==1.14.3
+
+# ---- Document Loaders ----
+pypdf==6.13.2
+unstructured[pptx,md,xlsx,image]
+python-docx
+python-pptx
+beautifulsoup4
+lxml
+markdown
+openpyxl
+msoffcrypto-tool
+docx2txt
+
+# ---- Runtime ----
+fastapi>=0.116.0
+python-dotenv==1.2.2
+pydantic==2.10.4
+requests>=2.32.0
+
+# ---- Authentication ----
+google-auth>=2.34.0
+PyJWT>=2.9.0
+
+# ---- OCR ----
+pytesseract
+pillow
+
+uvicorn>=0.35.0
+
+python-multipart>=0.0.20

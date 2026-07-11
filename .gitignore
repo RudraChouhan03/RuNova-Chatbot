@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+.mypy_cache/
+
+# Virtual Environment
+chatbot/
+
+# Environment Variables
+.env
+
+# SQLite
+chatbot.db
+chatbot.db-wal
+chatbot.db-shm
+
+# FAISS Vector Database
+faiss_db/
+
+# Uploaded Files (if generated at runtime)
+uploads/
+
+# IDE
+.vscode/
+

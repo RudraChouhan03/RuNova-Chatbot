@@ -1,0 +1,8 @@
+Collecting uvicorn
+  Downloading uvicorn-0.51.0-py3-none-any.whl.metadata (6.6 kB)
+Requirement already satisfied: click>=7.0 in .\chatbot\Lib\site-packages (from uvicorn) (8.4.2)
+Requirement already satisfied: h11>=0.8 in .\chatbot\Lib\site-packages (from uvicorn) (0.16.0)
+Requirement already satisfied: colorama in C:\Users\hp\AppData\Roaming\Python\Python311\site-packages (from click>=7.0->uvicorn) (0.4.6)
+Downloading uvicorn-0.51.0-py3-none-any.whl (73 kB)
+Installing collected packages: uvicorn
+Successfully installed uvicorn-0.51.0
