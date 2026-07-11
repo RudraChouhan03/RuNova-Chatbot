@@ -45,8 +45,17 @@ jobs:
           python -m compileall .
 
       - name: Verify FastAPI application
+        env:
+            GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+            TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+            HF_TOKEN: ${{ secrets.HF_TOKEN }}
+            OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+            ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
+            GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+            SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+            ALLOW_DEV_LOGIN: ${{ secrets.ALLOW_DEV_LOGIN }}
         run: |
-          python -c "from api import app; print('FastAPI app loaded successfully')"
+            python -c "from api import app; print('FastAPI app loaded successfully')"
 
   # ============================================================
   # 2. BUILD & PUSH DOCKER IMAGE
