@@ -806,11 +806,20 @@ function enhance(prose) {
     block.appendChild(head); block.appendChild(pre);
     head.querySelector(".code-copy").addEventListener("click", (e) => {
       const btn = e.currentTarget;
-      navigator.clipboard.writeText(code ? code.innerText : pre.innerText).then(() => {
-        btn.innerHTML = `<i data-lucide="check"></i> Copied`; icons();
-        setTimeout(() => { btn.innerHTML = `<i data-lucide="copy"></i> Copy`; icons(); }, 1600);
-      });
+      copyToClipboard(code ? code.innerText : pre.innerText).then((ok) => {
+      if (!ok) {
+          toast("Failed to copy", "err");
+          return;
+      }
+      btn.innerHTML = `<i data-lucide="check"></i> Copied`;
+        icons();
+
+        setTimeout(() => {
+            btn.innerHTML = `<i data-lucide="copy"></i> Copy`;
+            icons();
+        }, 1500);
     });
+  });
   });
   // tables -> responsive wrapper
   prose.querySelectorAll("table").forEach((tbl) => {
@@ -819,6 +828,34 @@ function enhance(prose) {
     tbl.parentNode.insertBefore(w, tbl); w.appendChild(tbl);
   });
   icons();
+}
+
+async function copyToClipboard(text) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      textarea.style.top = "-9999px";
+
+      document.body.appendChild(textarea);
+
+      textarea.focus();
+      textarea.select();
+
+      document.execCommand("copy");
+
+      document.body.removeChild(textarea);
+    }
+
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
 }
 
 /* ---------- toasts ---------- */
@@ -1056,10 +1093,22 @@ function addActions(turn, rawText, prompt) {
   box.appendChild(row); icons();
   row.querySelector(".copy").addEventListener("click", (e) => {
     const btn = e.currentTarget;
-    navigator.clipboard.writeText(rawText || "").then(() => {
-      btn.classList.add("copied"); btn.innerHTML = `<i data-lucide="check"></i>`; icons();
-      setTimeout(() => { btn.classList.remove("copied"); btn.innerHTML = `<i data-lucide="copy"></i>`; icons(); }, 1500);
-    });
+    copyToClipboard(rawText || "").then((ok) => {
+    if (!ok) {
+        toast("Failed to copy", "err");
+        return;
+    }
+
+    btn.classList.add("copied");
+    btn.innerHTML = `<i data-lucide="check"></i>`;
+    icons();
+
+    setTimeout(() => {
+        btn.classList.remove("copied");
+        btn.innerHTML = `<i data-lucide="copy"></i>`;
+        icons();
+    }, 1500);
+});
   });
   const regen = row.querySelector(".regen");
   if (prompt) regen.addEventListener("click", () => { if (state.busy) return; turn.remove(); addUserlessRegen(prompt); });
