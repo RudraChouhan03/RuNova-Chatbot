@@ -35,8 +35,31 @@
   }
   .design-ui-credit { display: none !important; }
 }
-
+/* legal modal */
+.legal-scrim { position: fixed; inset: 0; background: oklch(28% 0.02 266 / 0.45); z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s var(--e-out); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); display: grid; place-items: center; padding: 24px; }
+.legal-scrim.open { opacity: 1; pointer-events: auto; }
+.legal-modal { width: 100%; max-width: 640px; max-height: 82vh; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--sh-lg); display: flex; flex-direction: column; transform: translateY(14px) scale(.98); transition: transform .3s var(--e-out); }
+.legal-scrim.open .legal-modal { transform: none; }
+.legal-head { display: flex; align-items: center; gap: 12px; padding: 20px 24px 14px; border-bottom: 1px solid var(--border); }
+.legal-head h3 { font-size: 1.2rem; font-weight: 600; }
+.legal-head .close { margin-left: auto; border: none; background: none; cursor: pointer; color: var(--muted); padding: 6px; border-radius: 8px; display: grid; place-items: center; }
+.legal-head .close:hover { background: var(--rail-2); color: var(--ink); }
+.legal-head .close svg { width: 18px; height: 18px; }
+.legal-body { overflow-y: auto; padding: 18px 24px 26px; font-size: 0.92rem; line-height: 1.65; color: var(--ink-soft); }
+.legal-body h4 { font-family: var(--disp); font-size: 1rem; color: var(--ink); margin: 18px 0 6px; }
+.legal-body h4:first-child { margin-top: 0; }
+.legal-body p { margin: 6px 0; }
+.legal-body .updated { font-size: 0.78rem; color: var(--faint); margin-bottom: 8px; }
 </style>
+<div class="legal-scrim" id="legal-scrim">
+  <div class="legal-modal" role="dialog" aria-modal="true" aria-labelledby="legal-title">
+    <div class="legal-head">
+      <h3 id="legal-title">Terms of Service</h3>
+      <button class="close" id="legal-close" aria-label="Close"><i data-lucide="x"></i></button>
+    </div>
+    <div class="legal-body" id="legal-body"></div>
+  </div>
+</div>
 <script>
 (function () {
     // Design-ui pages are single compositions, so the whole body is editable.
@@ -641,7 +664,7 @@
         <div class="divider" style="display:none">or</div>
         <div class="field"><input style="display:none" type="email" id="email" placeholder="you@company.com" autocomplete="email" /></div>
         <button class="continue" style="display:none" id="email-continue">Continue with email</button>
-        <p class="legal">By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>. Google sign-in is verified server-side; your session token is signed and can't be forged.</p>
+        <p class="legal">By continuing you agree to the <a href="#" id="link-terms">Terms</a> and <a href="#" id="link-privacy">Privacy Policy</a>. Google sign-in is verified server-side; your session token is signed and can't be forged.</p>
       </div>
     </section>
   </div>
@@ -1397,6 +1420,68 @@ function waitForGoogle(tries = 0) {
   if (u && sessionToken()) signIn(u);
   else waitForGoogle();
 })();
+
+/*----Terms and Privacy Policy----*/
+const LEGAL = {
+  terms: {
+    title: "Terms of Service",
+    html: `
+      <p class="updated">Last updated: July 15, 2026</p>
+      <h4>1. Acceptance of terms</h4>
+      <p>By accessing or using RuNova ("the Service"), you agree to be bound by these Terms. If you do not agree, do not use the Service.</p>
+      <h4>2. Use of the Service</h4>
+      <p>You may use RuNova only for lawful purposes. You are responsible for any content you upload, the accounts you sign in with, and all activity under your session.</p>
+      <h4>3. AI-generated content</h4>
+      <p>RuNova produces responses using automated models. Output may be inaccurate or incomplete. You are responsible for verifying important information before relying on it. The Service is provided "as is" without warranties of any kind.</p>
+      <h4>4. Documents & data</h4>
+      <p>Documents you upload are processed to provide answers within your account. You retain ownership of your content and are responsible for ensuring you have the right to upload it.</p>
+      <h4>5. Acceptable use</h4>
+      <p>You agree not to attempt to bypass safety guardrails, reverse-engineer the Service, overload the infrastructure, or use it to generate unlawful, harmful, or infringing content.</p>
+      <h4>6. Limitation of liability</h4>
+      <p>To the maximum extent permitted by law, RuNova and its operators are not liable for any indirect, incidental, or consequential damages arising from your use of the Service.</p>
+      <h4>7. Changes</h4>
+      <p>We may update these Terms from time to time. Continued use after changes constitutes acceptance of the revised Terms.</p>
+      <h4>8. Contact</h4>
+      <p>Questions about these Terms can be directed to your workspace administrator or the Service operator.</p>
+    `
+  },
+  privacy: {
+    title: "Privacy Policy",
+    html: `
+      <p class="updated">Last updated: July 15, 2026</p>
+      <h4>1. Information we collect</h4>
+      <p>We collect the account details provided at sign-in (such as name and email via Google), the conversations you have with RuNova, documents you upload, and durable facts you allow to be stored in long-term memory.</p>
+      <h4>2. How we use it</h4>
+      <p>Your data is used to operate the Service: authenticating you, generating responses, retrieving relevant passages from your documents, and recalling saved facts across conversations. Data is scoped to your account.</p>
+      <h4>3. Data storage & retention</h4>
+      <p>Conversations, uploaded documents, and memory are stored to provide continuity. You can delete individual conversations and stored facts at any time from within the app, which removes them from active use.</p>
+      <h4>4. Third-party services</h4>
+      <p>RuNova relies on third-party providers for sign-in (Google) and model inference. These providers process data only as needed to deliver their part of the Service.</p>
+      <h4>5. Security</h4>
+      <p>Sessions are authenticated with signed tokens, and sign-in is verified server-side. We take reasonable measures to protect your data, though no system can be guaranteed fully secure.</p>
+      <h4>6. Your choices</h4>
+      <p>You may sign out, delete conversations, clear stored memory, or stop using the Service at any time. Deleting content removes it from your active account.</p>
+      <h4>7. Changes</h4>
+      <p>We may update this Policy. Material changes will be reflected by the "last updated" date above.</p>
+      <h4>8. Contact</h4>
+      <p>For privacy questions, contact your workspace administrator or the Service operator.</p>
+    `
+  }
+};
+function openLegal(kind) {
+  const doc = LEGAL[kind]; if (!doc) return;
+  $("#legal-title").textContent = doc.title;
+  $("#legal-body").innerHTML = doc.html;
+  $("#legal-scrim").classList.add("open");
+  icons();
+}
+function closeLegal() { $("#legal-scrim").classList.remove("open"); }
+$("#legal-close").addEventListener("click", closeLegal);
+$("#legal-scrim").addEventListener("click", (e) => { if (e.target === $("#legal-scrim")) closeLegal(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLegal(); });
+
+$("#link-terms").addEventListener("click", (e) => { e.preventDefault(); openLegal("terms"); });
+$("#link-privacy").addEventListener("click", (e) => { e.preventDefault(); openLegal("privacy"); });
 </script>
 </body>
 </html>
