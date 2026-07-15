@@ -6,7 +6,7 @@ import tempfile
 from typing import Any, Iterator
 
 from fastapi import FastAPI, UploadFile, Form, File, Depends, HTTPException
-from fastapi.responses import StreamingResponse, FileResponse, JSONResponse
+from fastapi.responses import StreamingResponse, FileResponse, JSONResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -144,9 +144,11 @@ def config():
     return {"google_client_id": os.getenv("GOOGLE_CLIENT_ID", "")}
 
 
-@app.get("/favicon.png", include_in_schema=False)
-def favicon():
-    return FileResponse("favicon.png")
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return RedirectResponse(
+        "https://ik.imagekit.io/wkugjyoyh/WhatsApp%20Image%202026-07-09%20at%2010.49.46%20PM.jpeg"
+    )
 
 
 # ---------------------------------------------------------------------------
